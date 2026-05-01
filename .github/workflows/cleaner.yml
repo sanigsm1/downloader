@@ -2,18 +2,18 @@ name: Clear Downloads Folder
 
 on:
   workflow_dispatch:
+    inputs:
+      warning:
+        description: '⚠️ WARNING: This will DELETE ALL files inside downloads/ folder. Click "Run workflow" only if you are sure.'
+        required: false
+        default: 'Read this warning before proceeding'
+        type: string
 
 jobs:
   delete:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Warning and delete
-        run: |
-          echo "⚠️ WARNING: This will delete ALL files inside downloads/ folder."
-          echo "If you want to delete all files, you have already clicked 'Run workflow'."
-          echo "Proceeding with deletion..."
-          rm -rf downloads/*
-          echo "✅ All files deleted from downloads/."
+      - name: Delete all files
+        run: rm -rf downloads/*
